@@ -36,3 +36,13 @@ com.kennet.expense.manager
 1. Clone the repository:
    ```bash
    git clone https://github.com/Kennetrl/expense-manager-backend.git
+   cd expense-manager-backend
+
+2. Create a .env file in the root of the project with your database credentials: 
+    ```bash
+    # Archivo .env
+    DB_USERNAME=your-username-database-postgresql
+    DB_PASSWORD=your-password-database-postgresql
+3. Run the application: ExpenseManagerApplication.java
+    ```bash
+   ./mvnw spring-boot:run
