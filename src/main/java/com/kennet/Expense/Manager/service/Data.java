@@ -18,12 +18,14 @@ public class Data {
 
     @PostConstruct
     public void init(){
+        /*
         User admin = new User();
-        admin.setEmail("joel@hotmail.com");
-        admin.setPasswordHash(passwordEncoder.encode("Admin123"));
+        admin.setEmail("kennet@hotmail.com");
+        admin.setPasswordHash(passwordEncoder.encode("kennet12345"));
         admin.setRole(Role.ADMIN);
         admin.setName("Joel");
         userRepository.save(admin);
+        */
     }
 
 }
