@@ -4,6 +4,8 @@ import com.kennet.Expense.Manager.dto.LoginRequest;
 import com.kennet.Expense.Manager.model.User;
 import com.kennet.Expense.Manager.service.AuthService;
 import com.kennet.Expense.Manager.service.JwtService;
+import com.kennet.Expense.Manager.utils.AuthResponseBuilder;
+import com.kennet.Expense.Manager.utils.ErrorResponseBuilder;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,19 +45,13 @@ public class AuthController {
 
             String jwtToken = jwtService.generateToken(extraClaims, user);
 
-            return ResponseEntity.ok(Map.of(
-                    "message", "Successful login!",
-                    "token", jwtToken,
-                    "expiresIn", jwtService.getJwtExpirationMl(),
-                    "data", Map.of(
-                            "email", user.getEmail(),
-                            "role", user.getRole().name()
-                            )
-                    ));
+            return ResponseEntity.ok(AuthResponseBuilder.buildAuthResponse(jwtToken, user));
+
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
-                    "Error", "Incorrect Credentials!"
-            ));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(ErrorResponseBuilder.buildErrorResponse(
+                            e.getMessage(), HttpStatus.UNAUTHORIZED
+                    ));
         }
     }
 }
