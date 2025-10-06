@@ -10,17 +10,26 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
+/**
+ * REST endpoints for managing categories (income/expense types).
+ */
 public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
 
     @GetMapping
+    /**
+     * Lists all categories.
+     */
     public List<Category> getAllCategories() {
         return categoryService.getAllCategories();
     }
 
     @GetMapping("/{id}")
+    /**
+     * Retrieves a category by id.
+     */
     public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
         return categoryService.getCategoryById(id)
                 .map(ResponseEntity::ok)
@@ -28,11 +37,17 @@ public class CategoryController {
     }
 
     @PostMapping
+    /**
+     * Creates a new category.
+     */
     public Category createCategory(@RequestBody Category category) {
         return categoryService.saveCategory(category);
     }
 
     @PutMapping("/{id}")
+    /**
+     * Updates an existing category.
+     */
     public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category categoryDetails) {
         return categoryService.getCategoryById(id).map(category -> {
             category.setName(categoryDetails.getName());
@@ -43,6 +58,9 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
+    /**
+     * Deletes a category by id.
+     */
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
         if(categoryService.getCategoryById(id).isPresent()) {
             categoryService.deleteCategory(id);

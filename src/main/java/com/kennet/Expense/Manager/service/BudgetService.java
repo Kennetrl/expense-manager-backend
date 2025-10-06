@@ -13,6 +13,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+/**
+ * Business logic for budgets.
+ * <p>
+ * Validates related entities and delegates persistence to the repository.
+ */
 public class BudgetService {
 
     @Autowired
@@ -27,6 +32,9 @@ public class BudgetService {
     @Autowired
     private ValidationService validationService;
 
+    /**
+     * Creates or updates a budget after validating related user and category.
+     */
     public Budget saveBudget(Budget budget) {
         User user = validationService.validateExistence(budget.getUser().getId(), userRepository, "Usuario");
         Category category = validationService.validateExistence(budget.getCategory().getId(), categoryRepository, "Categoría");

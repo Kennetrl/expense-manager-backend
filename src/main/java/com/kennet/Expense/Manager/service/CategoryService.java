@@ -12,6 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+/**
+ * Business logic for categories.
+ * <p>
+ * Ensures referenced user exists and provides CRUD helpers.
+ */
 public class CategoryService {
 
     @Autowired
@@ -24,6 +29,9 @@ public class CategoryService {
     private ValidationService validationService;
 
     // Crear o actualizar categoría
+    /**
+     * Creates or updates a category after validating the owning user.
+     */
     public Category saveCategory(Category category) {
         User user = validationService.validateExistence(category.getUser().getId(), userRepository, "Usuario");
         category.setUser(user);

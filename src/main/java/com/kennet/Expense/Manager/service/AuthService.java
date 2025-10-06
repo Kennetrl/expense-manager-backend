@@ -7,6 +7,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+/**
+ * Authentication related operations.
+ * <p>
+ * Provides user authentication by validating email/password using
+ * the configured {@link PasswordEncoder}.
+ */
 public class AuthService {
 
     @Autowired
@@ -15,6 +21,13 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * Authenticates a user by email and raw password.
+     * @param email user email
+     * @param password raw password
+     * @return authenticated {@link User}
+     * @throws RuntimeException when user not found or password mismatch
+     */
     public User authenticate(String email, String password) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));

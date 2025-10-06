@@ -6,6 +6,9 @@ import org.springframework.http.HttpStatus;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Helper to build a standard error response payload.
+ */
 public class ErrorResponseBuilder {
     public static Map<String, Object> buildErrorResponse(String message, HttpStatus status){
         Map<String, Object> response = new HashMap<>();

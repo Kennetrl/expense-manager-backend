@@ -13,6 +13,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+/**
+ * Business logic for incomes.
+ * <p>
+ * Validates user and category existence before persisting.
+ */
 public class IncomeService {
 
     @Autowired

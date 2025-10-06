@@ -5,6 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
+/**
+ * Shared validation helpers.
+ * <p>
+ * Provides reusable repository-based existence checks throwing a friendly exception.
+ */
 public class ValidationService {
 
     public <T> T validateExistence(Long id, JpaRepository<T, Long> repo, String entityName) {

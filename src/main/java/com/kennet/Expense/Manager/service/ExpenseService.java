@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 @Service
+/**
+ * Business logic for expenses.
+ * <p>
+ * Validates user and category existence before persisting.
+ */
 public class ExpenseService {
 
     @Autowired

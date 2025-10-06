@@ -10,6 +10,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+/**
+ * REST endpoints for managing users.
+ */
 public class UserController {
 
     @Autowired
@@ -17,21 +20,33 @@ public class UserController {
 
     //Listar usuarios
     @GetMapping
+    /**
+     * Lists all users.
+     */
     public List<User> getAllUser(){
         return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
+    /**
+     * Retrieves a user by id.
+     */
     public ResponseEntity<User> getUserBydId(@PathVariable Long id){
         return userService.getUserById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
+    /**
+     * Creates a new user.
+     */
     public User createUser(@RequestBody User user){
         return userService.saveUser(user);
     }
 
     @PostMapping("/{id}")
+    /**
+     * Updates an existing user (note: uses POST rather than PUT/PATCH).
+     */
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails){
         return userService.getUserById(id).map(user -> {
             user.setName(userDetails.getName());
@@ -42,6 +57,9 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    /**
+     * Deletes a user by id.
+     */
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
         if (userService.getUserById(id).isPresent()){
             userService.deleteUser(id);

@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+/**
+ * Business logic for users.
+ * <p>
+ * Delegates CRUD operations to the repository.
+ */
 public class UserService {
     @Autowired
     private UserRepository userRepository;

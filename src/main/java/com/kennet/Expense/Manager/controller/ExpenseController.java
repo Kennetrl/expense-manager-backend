@@ -10,17 +10,26 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/expenses")
+/**
+ * REST endpoints for managing expenses.
+ */
 public class ExpenseController {
 
     @Autowired
     private ExpenseService expenseService;
 
     @GetMapping
+    /**
+     * Lists all expenses.
+     */
     public List<Expense> getAllExpenses() {
         return expenseService.getAllExpenses();
     }
 
     @GetMapping("/{id}")
+    /**
+     * Retrieves an expense by id.
+     */
     public ResponseEntity<Expense> getExpenseById(@PathVariable Long id) {
         return expenseService.getExpenseById(id)
                 .map(ResponseEntity::ok)
@@ -28,11 +37,17 @@ public class ExpenseController {
     }
 
     @PostMapping
+    /**
+     * Creates a new expense.
+     */
     public Expense createExpense(@RequestBody Expense expense) {
         return expenseService.saveExpense(expense);
     }
 
     @PutMapping("/{id}")
+    /**
+     * Updates an existing expense.
+     */
     public ResponseEntity<Expense> updateExpense(@PathVariable Long id, @RequestBody Expense expenseDetails) {
         return expenseService.getExpenseById(id).map(expense -> {
             expense.setAmount(expenseDetails.getAmount());
@@ -45,6 +60,9 @@ public class ExpenseController {
     }
 
     @DeleteMapping("/{id}")
+    /**
+     * Deletes an expense by id.
+     */
     public ResponseEntity<Void> deleteExpense(@PathVariable Long id) {
         if(expenseService.getExpenseById(id).isPresent()) {
             expenseService.deleteExpense(id);

@@ -6,6 +6,9 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "refresh_token")
+/**
+ * Refresh token entity to support token renewal flows.
+ */
 public class RefreshToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -17,6 +17,11 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
+/**
+ * JWT handling utilities.
+ * <p>
+ * Generates and validates JWT tokens using HS256.
+ */
 public class JwtService {
     @Value("${app.jwt.secret}")
     private String secretKey;

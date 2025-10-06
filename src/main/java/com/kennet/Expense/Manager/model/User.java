@@ -10,6 +10,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
+/**
+ * User entity representing application users.
+ * <p>
+ * Implements {@link UserDetails} to integrate with Spring Security.
+ */
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

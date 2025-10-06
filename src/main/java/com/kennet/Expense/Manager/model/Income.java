@@ -8,6 +8,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "income")
+/**
+ * Income entity representing an income transaction.
+ */
 public class Income {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

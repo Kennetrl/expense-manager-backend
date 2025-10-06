@@ -3,6 +3,9 @@ package com.kennet.Expense.Manager.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
+/**
+ * Login payload carrying user credentials.
+ */
 public class LoginRequest {
 
     @NotBlank(message = "Email is required!")

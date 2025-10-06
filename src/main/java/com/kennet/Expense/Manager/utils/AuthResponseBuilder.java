@@ -5,6 +5,9 @@ import com.kennet.Expense.Manager.model.User;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Helper to build a standard authentication success response payload.
+ */
 public class AuthResponseBuilder {
 
     public static Map<String, Object> buildAuthResponse(String token, User user){

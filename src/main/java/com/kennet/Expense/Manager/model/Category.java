@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name="categories")
+/**
+ * Category entity for classifying expenses and incomes.
+ */
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

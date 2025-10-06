@@ -5,6 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
+/**
+ * Repository for {@link Category} persistence and queries.
+ */
 public interface CategoryRepository extends JpaRepository <Category, Long> {
     List<Category> findByUserId(Long userId);
 }

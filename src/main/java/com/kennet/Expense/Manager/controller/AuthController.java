@@ -21,6 +21,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/auth")
+/**
+ * Authentication endpoints.
+ * <p>
+ * Exposes login to authenticate a user and return a signed JWT plus safe user data.
+ */
 public class AuthController {
 
     @Autowired
@@ -34,6 +39,11 @@ public class AuthController {
     }
 
     @PostMapping("login")
+    /**
+     * Authenticates a user using email/password and returns a JWT with extra claims.
+     * @param request login payload with email and password (validated)
+     * @return 200 with token and user info; 401 with error payload on failure
+     */
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request){
         try{
             User user = authService.authenticate(request.getEmail(), request.getPassword());

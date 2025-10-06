@@ -10,6 +10,14 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+/**
+ * Security configuration for the API.
+ * <p>
+ * - Disables CSRF for stateless REST endpoints.
+ * - Allows unauthenticated access to auth endpoints under /api/auth/**.
+ * - Requires authentication for any other request.
+ * - Exposes a BCrypt {@link PasswordEncoder} bean for password hashing.
+ */
 public class SecurityConfig {
 
     @Bean

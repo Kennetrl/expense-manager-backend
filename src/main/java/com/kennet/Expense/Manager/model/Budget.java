@@ -8,6 +8,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "budgets")
+/**
+ * Budget entity defining spending limits per user and category.
+ */
 public class Budget {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

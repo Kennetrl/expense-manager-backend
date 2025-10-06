@@ -8,6 +8,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "expenses")
+/**
+ * Expense entity representing a spending transaction.
+ */
 public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
