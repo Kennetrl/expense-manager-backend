@@ -1,6 +1,7 @@
 package com.kennet.Expense.Manager.controller;
 
 import com.kennet.Expense.Manager.dto.LoginRequest;
+import com.kennet.Expense.Manager.dto.RegisterRequest;
 import com.kennet.Expense.Manager.model.User;
 import com.kennet.Expense.Manager.service.AuthService;
 import com.kennet.Expense.Manager.service.JwtService;
@@ -61,6 +62,35 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(ErrorResponseBuilder.buildErrorResponse(
                             e.getMessage(), HttpStatus.UNAUTHORIZED
+                    ));
+        }
+    }
+
+    @PostMapping("register")
+    /**
+     * Registers a new user, encodes password, and returns a JWT with user info.
+     *
+     * @param request registration payload with name, lastname, email, and password
+     * @return 201 Created with token and user info, or 400 on validation/error
+     */
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
+        try {
+            User user = authService.register(request);
+
+            Map<String, Object> extraClaims = new HashMap<>();
+            extraClaims.put("role", user.getRole());
+            extraClaims.put("name", user.getName());
+            extraClaims.put("email", user.getEmail());
+
+            String jwtToken = jwtService.generateToken(extraClaims, user);
+
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(AuthResponseBuilder.buildAuthResponse(jwtToken, user));
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(ErrorResponseBuilder.buildErrorResponse(
+                            e.getMessage(), HttpStatus.BAD_REQUEST
                     ));
         }
     }

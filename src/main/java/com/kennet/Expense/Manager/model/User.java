@@ -3,6 +3,7 @@ package com.kennet.Expense.Manager.model;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -104,16 +105,21 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        if (role == null) {
+            return List.of();
+        }
+        // Spring Security expects roles in the form ROLE_*
+        String roleNameWithPrefix = "ROLE_" + role.name();
+        return List.of(new SimpleGrantedAuthority(roleNameWithPrefix));
     }
 
     @Override
     public String getPassword() {
-        return "";
+        return passwordHash;
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return email;
     }
 }
