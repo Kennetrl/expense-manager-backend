@@ -1,9 +1,11 @@
 package com.kennet.Expense.Manager.controller;
 
 import com.kennet.Expense.Manager.model.Category;
+import com.kennet.Expense.Manager.model.User;
 import com.kennet.Expense.Manager.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,9 +24,28 @@ public class CategoryController {
     /**
      * Lists all categories.
      */
-    public List<Category> getAllCategories() {
+    public List<Category> getMyCategories(@AuthenticationPrincipal User currentUser) {
+        return categoryService.getCategoriesByUserId(currentUser.getId());
+    }
+
+    @GetMapping("/all")
+    public List<Category> getAllCategories(){
         return categoryService.getAllCategories();
     }
+
+
+    @PostMapping
+    public ResponseEntity<Category> createCategory(
+            @RequestBody Category category,
+            @AuthenticationPrincipal User currentUser) {
+
+        // Asignar usuario actual
+        category.setUser(currentUser);
+
+        Category saved = categoryService.saveCategory(category);
+        return ResponseEntity.ok(saved);
+    }
+
 
     @GetMapping("/{id}")
     /**
@@ -35,27 +56,20 @@ public class CategoryController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-
-    @PostMapping
-    /**
-     * Creates a new category.
-     */
-    public Category createCategory(@RequestBody Category category) {
-        return categoryService.saveCategory(category);
-    }
-
     @PutMapping("/{id}")
-    /**
-     * Updates an existing category.
-     */
-    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category categoryDetails) {
+    public ResponseEntity<Category> updateCategory(
+            @PathVariable Long id,
+            @RequestBody Category categoryDetails,
+            @AuthenticationPrincipal User currentUser) {
+
         return categoryService.getCategoryById(id).map(category -> {
             category.setName(categoryDetails.getName());
             category.setType(categoryDetails.getType());
-            category.setUser(categoryDetails.getUser());
+            category.setUser(currentUser); // asegura que siempre hay un usuario
             return ResponseEntity.ok(categoryService.saveCategory(category));
         }).orElse(ResponseEntity.notFound().build());
     }
+
 
     @DeleteMapping("/{id}")
     /**

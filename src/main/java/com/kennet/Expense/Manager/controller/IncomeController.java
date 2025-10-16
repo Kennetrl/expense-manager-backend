@@ -1,12 +1,16 @@
 package com.kennet.Expense.Manager.controller;
 
 import com.kennet.Expense.Manager.model.Income;
+import com.kennet.Expense.Manager.model.User;
 import com.kennet.Expense.Manager.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/income")
@@ -19,6 +23,11 @@ public class IncomeController {
     private IncomeService incomeService;
 
     @GetMapping
+    public List<Income> getMyIncome(@AuthenticationPrincipal User currentUser) {
+        return incomeService.getIncomeByUserId(currentUser.getId());
+    }
+
+    @GetMapping("/all")
     /**
      * Lists all income records.
      */
@@ -63,10 +72,12 @@ public class IncomeController {
     /**
      * Deletes an income record by id.
      */
-    public ResponseEntity<Void> deleteIncome(@PathVariable Long id) {
+    public ResponseEntity<Map<String, String>> deleteIncome(@PathVariable Long id) {
         if(incomeService.getIncomeById(id).isPresent()) {
             incomeService.deleteIncome(id);
-            return ResponseEntity.noContent().build();
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Income successfully deleted");
+            return ResponseEntity.ok(response);
         }
         return ResponseEntity.notFound().build();
     }

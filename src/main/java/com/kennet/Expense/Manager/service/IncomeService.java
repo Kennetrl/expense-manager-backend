@@ -32,6 +32,10 @@ public class IncomeService {
     @Autowired
     private ValidationService validationService;
 
+    public List<Income> getIncomeByUserId(Long userId) {
+        return incomeRepository.findByUserId(userId);
+    }
+
     public Income saveIncome(Income income) {
         User user = validationService.validateExistence(income.getUser().getId(), userRepository, "Usuario");
         Category category = validationService.validateExistence(income.getCategory().getId(), categoryRepository, "Categoría");

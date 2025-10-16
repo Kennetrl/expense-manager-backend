@@ -20,7 +20,7 @@ public class Data {
     public void init(){
         /*
         User admin = new User();
-        admin.setEmail("kennet_rl@hotmail.com");
+        admin.setEmail("kennet@hotmail.com");
         admin.setPasswordHash(passwordEncoder.encode("kennet12345"));
         admin.setRole(Role.ADMIN);
         admin.setName("Kennet");
